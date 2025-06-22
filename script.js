@@ -80,9 +80,30 @@ function render() {
     let p = pos + shape[j],
       x = p % w,
       y = Math.floor(p / w);
-    blocks[j].style.transform = `translate(${x * size}px,${y * size}px)`;
+
+    const block = blocks[j];
+    const newTransform = `translate(${x * size}px,${y * size}px)`;
+
+    const prevTransform =
+      block.style.transform || `translate(${x * size}px,${y * size}px)`;
+
+    if (prevTransform !== newTransform) {
+      block.animate(
+        [{ transform: prevTransform }, { transform: newTransform }],
+        {
+          duration: 40,
+          easing: "ease-out",
+          fill: "forwards",
+        }
+      ).onfinish = () => {
+        block.style.transform = newTransform;
+      };
+    } else {
+      block.style.transform = newTransform;
+    }
   }
 }
+
 function collide(offset = 0) {
   return arraySome(shape, (i) => {
     let p = pos + i + offset,
@@ -107,30 +128,55 @@ function freeze() {
 }
 function clearRows() {
   let rowsCleared = 0;
+
   for (let y = h - 1; y >= 0; y--) {
-    let row = [];
-    for (let i = 0; i < settled.length; i++)
-      if (settled[i].y === y) row.push(settled[i]);
+    let row = settled.filter((b) => b.y === y);
+
     if (row.length === w) {
-      for (let i = 0; i < row.length; i++) grid.removeChild(row[i].el);
+      row.forEach((b) => {
+        b.el.animate([{ opacity: 1 }, { opacity: 0 }], {
+          duration: 200,
+          fill: "forwards",
+        }).onfinish = () => {
+          grid.removeChild(b.el);
+        };
+      });
+
       settled = settled.filter((b) => b.y !== y);
+
       for (let i = 0; i < settled.length; i++) {
         if (settled[i].y < y) {
           settled[i].y++;
-          settled[i].el.style.transform = `translate(${settled[i].x * size}px,${
-            settled[i].y * size
-          }px)`;
+          const newY = settled[i].y * size;
+          settled[i].el.animate(
+            [
+              { transform: settled[i].el.style.transform },
+              { transform: `translate(${settled[i].x * size}px,${newY}px)` },
+            ],
+            {
+              duration: 150,
+              easing: "ease-in-out",
+              fill: "forwards",
+            }
+          ).onfinish = () => {
+            settled[i].el.style.transform = `translate(${
+              settled[i].x * size
+            }px,${newY}px)`;
+          };
         }
       }
+
       rowsCleared++;
       y++;
     }
   }
+
   if (rowsCleared) {
     score += rowsCleared * 10;
     scoreDisplay.textContent = score;
   }
 }
+
 function move(dx) {
   if (!collide(dx)) {
     pos += dx;
