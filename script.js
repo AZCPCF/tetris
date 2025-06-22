@@ -2,7 +2,7 @@ const grid = document.getElementById("grid"),
   scoreDisplay = document.getElementById("score"),
   startButton = document.getElementById("start-button"),
   message = document.getElementById("game-over-message"),
-  w = 12, h = 24, size = 25;
+  w = 12, h = window.innerWidth > 768 ? 20:24, size = 25;
 const colors = ["color-orange","color-red","color-purple","color-yellow","color-cyan","color-green","color-blue"];
 const shapes = [[[1,w+1,w*2+1,2],[w,w+1,w+2,w*2+2],[1,w+1,w*2+1,w*2],[w,w*2,w*2+1,w*2+2]],[[0,w,w+1,w*2+1],[w+1,w+2,w*2,w*2+1]],[[1,w,w+1,w+2],[1,w+1,w+2,w*2+1],[w,w+1,w+2,w*2+1],[1,w,w+1,w*2+1]],Array(4).fill([0,1,w,w+1]),[[1,w+1,w*2+1,w*3+1],[w,w+1,w+2,w+3]],
   [[1,2,w,w+1],[0,w,w+1,w*2+1]],
