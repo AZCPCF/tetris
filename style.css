@@ -1,0 +1,133 @@
+body {
+  background: oklch(15% 0.02 270);
+  color: oklch(95% 0 0);
+  font-family: Arial, sans-serif;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
+  align-items: center;
+}
+
+.grid {
+  width: 300px;
+  height: 600px;
+  border-radius: 4px;
+  display: block;
+  position: relative;
+  border: 3px solid oklch(95% 0 0);
+  background: oklch(20% 0.02 270);
+}
+
+.block {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  transition: transform 0.1s linear;
+  border-radius: 4px;
+  border: 1px solid oklch(25% 0.01 270);
+  box-sizing: border-box;
+}
+
+.taken {
+  border: 1px solid oklch(40% 0 0);
+}
+
+.tetromino {
+  border: 1px solid oklch(49.463% 0.00766 17.013);
+}
+
+.color-orange {
+  background-color: oklch(75% 0.23 50);
+}
+.color-red {
+  background-color: oklch(65% 0.27 20);
+}
+.color-purple {
+  background-color: oklch(70% 0.2 300);
+}
+.color-yellow {
+  background-color: oklch(90% 0.24 100);
+}
+.color-cyan {
+  background-color: oklch(85% 0.18 200);
+}
+.color-green {
+  background-color: oklch(75% 0.25 140);
+}
+.color-blue {
+  background-color: oklch(70% 0.2 250);
+}
+
+#score {
+  /* margin: 15px 0; */
+  font-size: 28px;
+  color: oklch(98% 0 0);
+}
+
+#start-button {
+  padding: 12px 24px;
+  width: 100%;
+  border: 2px solid oklch(95% 0 0);
+  margin-top: 10px;
+  background: transparent;
+  color: oklch(95% 0 0);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+#start-button:hover {
+  background: oklch(95% 0 0);
+  color: oklch(15% 0.02 270);
+}
+
+#start-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: oklch(30% 0 0);
+  color: oklch(70% 0 0);
+  border-color: oklch(45% 0 0);
+  pointer-events: none;
+}
+
+#game-over-message {
+  font-size: 24px;
+  color: oklch(65% 0.27 20);
+  margin-bottom: 10px;
+}
+#mobile-controls button {
+  font-size: 20px;
+  border-radius: 8px;
+  border: none;
+  padding: 10px 15px;
+  background: oklch(30% 0.03 270);
+  color: oklch(98% 0 0);
+}
+
+#mobile-controls {
+  position: fixed;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 10px;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+@media (min-width: 768px) {
+  #mobile-controls {
+    display: none;
+  }
+  body {
+    align-items: center;
+  }
+}
